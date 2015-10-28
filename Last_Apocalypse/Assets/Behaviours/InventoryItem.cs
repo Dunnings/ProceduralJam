@@ -8,9 +8,10 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public InventorySlot InventorySlot;
 
 	// Use this for initialization
-	void Start () {
-	
-	}
+	void Start ()
+    {
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

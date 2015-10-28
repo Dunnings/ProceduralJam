@@ -5,6 +5,11 @@ using System.Collections;
 public class TimeManager : MonoBehaviour {
     public static TimeManager Instance;
 
+    public float m_dayDurationInSeconds = 300;
+    public float m_nightDurationInSeconds = 10;
+
+
+    public Image m_nightOverlay;
     public Image m_Image;
     public Text m_Text;
     public Color m_colMidnight;
@@ -14,16 +19,16 @@ public class TimeManager : MonoBehaviour {
     public GameObject m_sun;
     public GameObject m_moon;
 
-    public float m_left;
-    public float m_top;
-    public float m_bottom;
-    public float m_right;
-
     public GameObject m_leftGO;
     public GameObject m_topGO;
     public GameObject m_rightGO;
 
-    bool isNight = false;
+    private float m_left;
+    private float m_top;
+    private float m_bottom;
+    private float m_right;
+
+    private bool isNight = false;
 
     void Awake()
     {
@@ -41,14 +46,28 @@ public class TimeManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        m_time += Time.deltaTime * (isNight?4f:2f);
-        
-        if(m_time > 24f) { m_time -= 24f; }
+        if (isNight)
+        {
+            //12 hours in a day
+            //1f/1f = an hour each second
+            //1f/60f = an hour a minute
+            //1f/360f = an hour an hour
+            //12f/300f
+           
+            m_time += Time.deltaTime * (12f/(m_nightDurationInSeconds));
+        }
+        else
+        {
+            m_time += Time.deltaTime * (12f / (m_dayDurationInSeconds));
+        }
+
+        if (m_time > 24f) { m_time -= 24f; }
         if (m_time >= 6f && m_time < 18f)
         {
             if (isNight)
             {
                 //JUST TURNED DAY
+                m_nightOverlay.color = new Color(0f, 0f, 0f, 0f);
                 m_moon.SetActive(false);
                 m_sun.SetActive(true);
             }
@@ -98,6 +117,7 @@ public class TimeManager : MonoBehaviour {
             y *= 0.07f;
             y = m_bottom + y;
             m_moon.transform.position = transform.position + new Vector3(x, y, 0f);
+            m_nightOverlay.color = new Color(0f, 0f, 0f, Mathf.Sin(nightPercent * Mathf.PI));
         }
         float colorVal = m_time;
         if(colorVal > 12f)
@@ -108,7 +128,7 @@ public class TimeManager : MonoBehaviour {
 
         m_Image.color = Color.Lerp(m_colMidnight, m_colMidday, colorVal / 12f);
 
-        m_Text.text = (m_time).ToString("00") + ":" + ((m_time % 1f) * 60f).ToString("00");
+        m_Text.text = (m_time - (m_time % 1f)).ToString("00") + ":" + ((m_time % 1f) * 60f).ToString("00");
 	}
 
     public float GetTime() {
