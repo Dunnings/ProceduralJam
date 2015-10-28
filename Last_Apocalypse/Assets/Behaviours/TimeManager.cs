@@ -117,8 +117,10 @@ public class TimeManager : MonoBehaviour {
             y *= 0.07f;
             y = m_bottom + y;
             m_moon.transform.position = transform.position + new Vector3(x, y, 0f);
-            m_nightOverlay.color = new Color(0f, 0f, 0f, Mathf.Sin(nightPercent * Mathf.PI));
+            m_nightOverlay.color = new Color(0f, 0f, 0f, Mathf.Sin(nightPercent * Mathf.PI) * 0.5f);
+            
         }
+
         float colorVal = m_time;
         if(colorVal > 12f)
         {
