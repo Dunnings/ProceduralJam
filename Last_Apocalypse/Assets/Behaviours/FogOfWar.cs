@@ -139,7 +139,7 @@ public class FogOfWar : MonoBehaviour
                 }
                 if (pos.x > mapWidth-1)
                 {
-                    pos.x = mapWidth;
+                    pos.x = mapWidth - 1;
                 }
 
                 //make sure Y does not go out of range of map
@@ -149,7 +149,7 @@ public class FogOfWar : MonoBehaviour
                 }
                 if (pos.y > mapHeight-1)
                 {
-                    pos.y = mapHeight;
+                    pos.y = mapHeight - 1;
                 }
 
                 if (fogTiles[(int)pos.x, (int)pos.y].activeSelf != visibility)
