@@ -130,7 +130,7 @@ public class TimeManager : MonoBehaviour {
 
         m_Image.color = Color.Lerp(m_colMidnight, m_colMidday, colorVal / 12f);
 
-        m_Text.text = (m_time - (m_time % 1f)).ToString("00") + ":" + ((m_time % 1f) * 60f).ToString("00");
+        m_Text.text = (m_time - (m_time % 1f)).ToString("00") + ":" + ((m_time % 1f) * 59f).ToString("00");
 	}
 
     public float GetTime() {
