@@ -8,6 +8,12 @@ public class UIManager : MonoBehaviour {
     public static UIManager Instance;
     public Image m_mainBorder;
     public Image m_bottomBorder;
+    public GameObject m_bottomBar;
+    public GameObject m_bottomBarHidden;
+    private Vector3 m_bottomBarPos;
+    private Vector3 m_bottomBarHiddenPos;
+    public bool bottomBarShown = true;
+    
 
     public Color m_defaultColor;
     
@@ -17,7 +23,9 @@ public class UIManager : MonoBehaviour {
 	
 	void Start () {
         m_defaultColor = m_mainBorder.color;
-	}
+        m_bottomBarPos = m_bottomBar.transform.position;
+        m_bottomBarHiddenPos = m_bottomBarHidden.transform.position;
+    }
 
     void Update()
     {
@@ -43,5 +51,31 @@ public class UIManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(_delay);
         UpdateBorderColor(m_defaultColor);
+    }
+
+    public void ShowBottomBar()
+    {
+        iTween.MoveTo(m_bottomBar, iTween.Hash("y", m_bottomBarPos.y, "islocal", false, "time", 0.6f, "easetype", iTween.EaseType.easeOutBounce, "oncompletetarget", gameObject, "oncomplete", "ToggleBottomBarBool"));
+    }
+    public void HideBottomBar()
+    {
+        iTween.MoveTo(m_bottomBar, iTween.Hash("y", m_bottomBarHiddenPos.y, "islocal", false, "time", 0.6f, "easetype", iTween.EaseType.easeOutSine, "oncompletetarget", gameObject, "oncomplete", "ToggleBottomBarBool"));
+    }
+
+    public void ToggleBottomBarBool()
+    {
+        bottomBarShown = !bottomBarShown;
+    }
+
+    public void ToggleBottomBar()
+    {
+        if (bottomBarShown)
+        {
+            HideBottomBar();
+        }
+        else
+        {
+            ShowBottomBar();
+        }
     }
 }
