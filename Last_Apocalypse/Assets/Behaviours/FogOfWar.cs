@@ -79,12 +79,16 @@ public class FogOfWar : MonoBehaviour
 
     void Update()
     {
-        float test = player.transform.position.y / (tileWidth / 100);
-        //Debug.Log();
-        Debug.Log(test);
-        //if (blackFog[(int)player.transform.position.x / (tileWidth / 100), (int)player.transform.position.y / (tileHeight / 100)].activeSelf == true)
+        float posX = player.transform.position.x * 100.0f / tileWidth;
+        float posY = player.transform.position.y * 100.0f / tileHeight;
+
+        //if (posX % tileWidth == 0.0f ||
+        //    posY % tileHeight == 0.0f)
         //{
-        //    blackFog[(int)player.transform.position.x, (int)player.transform.position.y].SetActive(false);
+            if (blackFog[(int)posX, (int)posY].activeSelf == true)
+            {
+                blackFog[(int)posX, (int)posY].SetActive(false);
+            }
         //}
     }
   
