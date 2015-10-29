@@ -39,9 +39,40 @@ public class FogOfWar : MonoBehaviour
         _blackFog.transform.parent = this.transform;
     }
 
-    void InitFog(float _mapWidth, float _mapHeight, float _tileWidth, float _tileHeight)
+    /// <summary>
+    /// Use me in the map gen, make sure you comment out Awake
+    /// This sets up the fog. Make sure that the tile width and height 
+    /// is not a decimal i.e 32 instead of 0.32. CreateFog and the Update
+    /// handle this
+    /// </summary>
+    /// <param name="_mapWidth"></param>
+    /// <param name="_mapHeight"></param>
+    /// <param name="_tileWidth"></param>
+    /// <param name="_tileHeight"></param>
+    public void InitFog(int _mapWidth, int _mapHeight, int _tileWidth, int _tileHeight)
     {
+        //set up vars
+        mapWidth = _mapWidth;
+        mapHeight = _mapHeight;
+        tileHeight = _tileHeight;
+        tileWidth = _tileWidth;
+        
+        //Create new GameObjects
+        blackFog = new GameObject[mapWidth, mapHeight];
+        alphaFog = new GameObject[mapWidth, mapHeight];
+        //set up both GameObjects for Fog  
+        _blackFog = new GameObject("Black Fog");
+        _alphaFog = new GameObject("Alpha Fog");
+        //SpriteRenderer bF = _blackFog.AddComponent<SpriteRenderer>();
+        //SpriteRenderer af = _alphaFog.AddComponent<SpriteRenderer>();        
 
+        //set up fog sprites
+        CreateFog(Color.black, blackFog, _blackFog);
+        CreateFog(new Color(0.0f, 0.0f, 0.0f, 0.75f), alphaFog, _alphaFog);
+
+        //parent to this GO
+        _alphaFog.transform.parent = this.transform;
+        _blackFog.transform.parent = this.transform;
     }
 
     /// <summary>
@@ -49,7 +80,7 @@ public class FogOfWar : MonoBehaviour
     /// </summary>
     /// <param name="fogCol"></param>
     /// <param name="fogSpriteRenderer"></param>
-    void CreateFog(Color fogCol, GameObject[,] fogTiles, GameObject parent)
+    private void CreateFog(Color fogCol, GameObject[,] fogTiles, GameObject parent)
     {
         //temp holder for fog text/sprite
         Texture2D fog = new Texture2D(tileWidth, tileHeight);
@@ -83,7 +114,7 @@ public class FogOfWar : MonoBehaviour
     /// <summary>
     /// Called every frame, checks player pos and updates the fog
     /// </summary>
-    void Update()
+    private void Update()
     {
 
         //get array pos from player pos
@@ -115,7 +146,7 @@ public class FogOfWar : MonoBehaviour
     /// <param name="_y"></param>
     /// <param name="fogTiles"></param>
     /// <param name="visibility"></param>
-    void ClearFog(int _x, int _y, GameObject[,] fogTiles, bool visibility)
+    private void ClearFog(int _x, int _y, GameObject[,] fogTiles, bool visibility)
     {
         //iterate down the line of sight
         for (int rad = sightRadius; rad >= 0; rad--)
