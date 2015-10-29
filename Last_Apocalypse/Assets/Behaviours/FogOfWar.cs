@@ -28,14 +28,18 @@ public class FogOfWar : MonoBehaviour
         greyFog = new GameObject[mapWidth, mapHeight];
         //set up both GameObjects for Fog  
         undisFogGO = new GameObject ("Black Fog");
+        undisFogGO.AddComponent<SpriteRenderer>();
+
         CreateFog(Color.black, blackFog, undisFogGO);
 
-        fogGO = new GameObject("Alpha Fog");
-        CreateFog(new Color(0.0f,0.0f,0.0f,0.5f), greyFog, fogGO);
-        fogGO.transform.parent = this.transform;
+        //fogGO = new GameObject("Alpha Fog");
+        //CreateFog(new Color(0.0f,0.0f,0.0f,0.5f), greyFog, fogGO);
+        //fogGO.transform.parent = this.transform;
+
+        
 
         undisFogGO.transform.parent = this.transform;
-        fogGO.transform.parent = this.transform;    
+        //fogGO.transform.parent = this.transform;    
     }
 
     /// <summary>
@@ -57,6 +61,7 @@ public class FogOfWar : MonoBehaviour
         fog.Apply();
 
         Sprite _fogSprite = Sprite.Create(fog, new Rect(0.0f, 0.0f, fog.width, fog.height), new Vector2(0.0f, 0.0f));
+       
 
         //loop over texture width and height
         for (int x = 0; x < mapWidth; x++)
@@ -74,10 +79,13 @@ public class FogOfWar : MonoBehaviour
 
     void Update()
     {
-        if (blackFog[(int)player.transform.position.x, (int)player.transform.position.y].activeSelf == true)
-        {
-            blackFog[(int)player.transform.position.x, (int)player.transform.position.y].SetActive(false);
-        }
+        float test = player.transform.position.y / (tileWidth / 100);
+        //Debug.Log();
+        Debug.Log(test);
+        //if (blackFog[(int)player.transform.position.x / (tileWidth / 100), (int)player.transform.position.y / (tileHeight / 100)].activeSelf == true)
+        //{
+        //    blackFog[(int)player.transform.position.x, (int)player.transform.position.y].SetActive(false);
+        //}
     }
   
 }
