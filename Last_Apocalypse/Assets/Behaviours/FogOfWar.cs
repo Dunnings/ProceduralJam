@@ -9,8 +9,8 @@ public class FogOfWar : MonoBehaviour
 
     private GameObject[,] blackFog;
     private GameObject[,] alphaFog;
-    
 
+    private float pastPosX, pastPosY;
 
     //Player Ref
     public GameObject player;  
@@ -81,11 +81,18 @@ public class FogOfWar : MonoBehaviour
         float posX = player.transform.position.x * 100.0f / tileWidth;
         float posY = player.transform.position.y * 100.0f / tileHeight;
 
-        //if (posX % sightRadius == 0 ||
-        //    posY % sightRadius == 0)
-        //{
-            ClearFog((int)posX, (int)posY, blackFog);
-        //}
+        if (posX >= pastPosX + sightRadius || posX <= pastPosX - sightRadius ||
+            posY >= pastPosY + sightRadius || posY <= pastPosY - sightRadius)
+        {
+            ClearFog((int)pastPosX, (int)pastPosY, alphaFog, true);
+            ClearFog((int)posX, (int)posY, blackFog, false);
+            ClearFog((int)posX, (int)posY, alphaFog, false);            
+
+            pastPosX = posX;
+            pastPosY = posY;
+        }
+
+        
 
         ////set current player pos fog tiles active false
         //if (blackFog[(int)posX, (int)posY].activeSelf == true)
@@ -95,7 +102,7 @@ public class FogOfWar : MonoBehaviour
        
     }
 
-    void ClearFog(int _x, int _y, GameObject[,] fogTiles)
+    void ClearFog(int _x, int _y, GameObject[,] fogTiles, bool visibility)
     {
         // from the player point - the sight radius up to the player 
         //point + the sight radius
@@ -124,10 +131,10 @@ public class FogOfWar : MonoBehaviour
                 }
 
                 //if the targted tile is active
-                if (fogTiles[x, y].activeSelf)
+                if (fogTiles[x, y].activeSelf != visibility)
                 {
                     //set to be inactive
-                    fogTiles[x, y].SetActive(false);
+                    fogTiles[x, y].SetActive(visibility);
                 }
             }            
         }
