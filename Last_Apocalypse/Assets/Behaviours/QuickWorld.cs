@@ -8,8 +8,6 @@ public class QuickWorld : MonoBehaviour
 
     void Start()
     {
-        GameObject world = new GameObject("World");
-
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)

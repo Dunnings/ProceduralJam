@@ -9,7 +9,8 @@ public class TimeManager : MonoBehaviour {
     public float m_nightDurationInSeconds = 10;
 
 
-    public Image m_nightOverlay;
+    public Light m_light;
+
     public Image m_Image;
     public Text m_Text;
     public Color m_colMidnight;
@@ -67,7 +68,6 @@ public class TimeManager : MonoBehaviour {
             if (isNight)
             {
                 //JUST TURNED DAY
-                m_nightOverlay.color = new Color(0f, 0f, 0f, 0f);
                 m_moon.SetActive(false);
                 m_sun.SetActive(true);
             }
@@ -117,7 +117,6 @@ public class TimeManager : MonoBehaviour {
             y *= 0.07f;
             y = m_bottom + y;
             m_moon.transform.position = transform.position + new Vector3(x, y, 0f);
-            m_nightOverlay.color = new Color(0f, 0f, 0f, Mathf.Sin(nightPercent * Mathf.PI) * 0.5f);
             
         }
 
@@ -129,6 +128,7 @@ public class TimeManager : MonoBehaviour {
         }
 
         m_Image.color = Color.Lerp(m_colMidnight, m_colMidday, colorVal / 12f);
+        m_light.color = Color.Lerp(m_colMidnight, m_colMidday, colorVal / 12f);
 
         m_Text.text = (m_time - (m_time % 1f)).ToString("00") + ":" + ((m_time % 1f) * 59f).ToString("00");
 	}
