@@ -35,7 +35,7 @@ public class CharMovement : MonoBehaviour {
             }
             gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
                                              mousePos,
-                                             1 / (speed * (Vector3.Distance(gameObject.transform.position, mousePos))));
+                                             1 / (speed * (Vector3.Distance(gameObject.transform.position, mousePos))) * Time.deltaTime);
         }
         else
         {
