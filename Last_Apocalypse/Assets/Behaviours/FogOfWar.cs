@@ -33,7 +33,7 @@ public class FogOfWar : MonoBehaviour
         //SpriteRenderer af = _alphaFog.AddComponent<SpriteRenderer>();        
 
         CreateFog(Color.black, blackFog, _blackFog);        
-        CreateFog(new Color(0.0f, 0.0f, 0.0f, 0.75f), alphaFog, _alphaFog);
+        CreateFog(new Color(0.0f, 0.0f, 0.0f, 0.5f), alphaFog, _alphaFog);
 
         _alphaFog.transform.parent = this.transform;
         _blackFog.transform.parent = this.transform;
@@ -109,8 +109,13 @@ public class FogOfWar : MonoBehaviour
                 f.sortingOrder = 32767;
             }
         }
-    }
 
+        float posX = player.transform.position.x * 100.0f / tileWidth;
+        float posY = player.transform.position.y * 100.0f / tileHeight;
+
+        ClearFog((int)posX, (int)posY, fogTiles, false);
+    }
+    
     /// <summary>
     /// Called every frame, checks player pos and updates the fog
     /// </summary>
