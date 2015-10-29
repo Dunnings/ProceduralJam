@@ -14,8 +14,15 @@ public class Torch : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-	}
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(new Vector3(0f, 0f, 90f * Time.deltaTime));
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(new Vector3(0f, 0f, -90f * Time.deltaTime));
+        }
+    }
 
     public void Flicker()
     {
@@ -24,14 +31,7 @@ public class Torch : MonoBehaviour {
 
     public void SetIntensity(float f)
     {
-        if (TimeManager.Instance.GetTime() > 18f || TimeManager.Instance.GetTime() < 6f)
-        {
-            m_light.intensity = f;
-        }
-        else
-        {
-            m_light.intensity = 0f;
-        }
+        m_light.intensity = f;
     }
 
 }
