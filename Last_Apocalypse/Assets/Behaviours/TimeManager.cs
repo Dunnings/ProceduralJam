@@ -61,7 +61,7 @@ public class TimeManager : MonoBehaviour {
         {
             m_time += Time.deltaTime * (12f / (m_dayDurationInSeconds));
         }
-
+        float daynightPercent = 0f;
         if (m_time > 24f) { m_time -= 24f; }
         if (m_time >= 6f && m_time < 18f)
         {
@@ -84,6 +84,7 @@ public class TimeManager : MonoBehaviour {
             y *= 0.07f;
             y = m_bottom + y;
             m_sun.transform.position = transform.position + new Vector3(x, y, 0f);
+            daynightPercent = dayPercent;
         }
         else
         {
@@ -117,7 +118,8 @@ public class TimeManager : MonoBehaviour {
             y *= 0.07f;
             y = m_bottom + y;
             m_moon.transform.position = transform.position + new Vector3(x, y, 0f);
-            
+
+            daynightPercent = nightPercent;
         }
 
         float colorVal = m_time;
@@ -129,6 +131,14 @@ public class TimeManager : MonoBehaviour {
 
         m_Image.color = Color.Lerp(m_colMidnight, m_colMidday, colorVal / 12f);
         m_light.color = Color.Lerp(m_colMidnight, m_colMidday, colorVal / 12f);
+        m_light.transform.rotation = Quaternion.LookRotation(Vector3.zero - m_light.transform.position, Vector3.up);
+        m_light.transform.position = new Vector3((daynightPercent * 270f) - 135f, 0f, -20f);
+        
+        m_light.intensity = Mathf.Sin(daynightPercent * Mathf.PI);
+        if (isNight)
+        {
+            m_light.intensity *= 0.5f;
+        }
 
         m_Text.text = (m_time - (m_time % 1f)).ToString("00") + ":" + ((m_time % 1f) * 59f).ToString("00");
 	}
