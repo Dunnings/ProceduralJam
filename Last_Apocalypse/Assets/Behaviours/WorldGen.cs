@@ -127,7 +127,7 @@ public class WorldGen : MonoBehaviour {
 				x++;
 			}
 
-			WorldGrid [i] = (GameObject)Instantiate (WorldGrid [i], new Vector3 (x * 0.28f, y * 0.28f, 0), Quaternion.identity);
+			WorldGrid [i] = (GameObject)Instantiate (WorldGrid [i], new Vector3 (x * 9, y * 9, 0), Quaternion.identity);
 
 			WorldGrid [i].transform.parent = transform;
 
