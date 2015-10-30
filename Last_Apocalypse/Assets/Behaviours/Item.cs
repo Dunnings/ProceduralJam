@@ -36,5 +36,6 @@ public class Item : MonoBehaviour {
         gameObject.SetActive(true);
         transform.position = pos;
         isPlaced = true;
+        CharMovement.Instance.anim.Play("player_poke");
     }
 }

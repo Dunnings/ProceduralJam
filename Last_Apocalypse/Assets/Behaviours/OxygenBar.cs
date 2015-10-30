@@ -4,7 +4,10 @@ using System.Collections;
 
 public class OxygenBar : MonoBehaviour {
 
+    public float m_oxygenDecreasePerSecond = 0.05f;
+
     public float m_oxygenPercent = 1.0f;
+    public bool m_decreaseOxygen = false;
 
     public Color m_colHigh;
     public Color m_colMed;
@@ -40,11 +43,13 @@ public class OxygenBar : MonoBehaviour {
             m_image.color = Color.Lerp(m_colCritical, m_colLow, lerpVal);
         }
 
-        //DEBUG TEST
-        m_oxygenPercent -= Time.deltaTime * 0.2f;
+        if (m_decreaseOxygen)
+        {
+            m_oxygenPercent -= Time.deltaTime * m_oxygenDecreasePerSecond;
+        }
         if(m_oxygenPercent <= 0f)
         {
-            m_oxygenPercent = 1f;
+            //GAME OVER
         }
     }
 }
