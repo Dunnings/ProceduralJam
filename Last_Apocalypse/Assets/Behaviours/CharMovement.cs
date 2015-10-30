@@ -3,19 +3,33 @@ using System.Collections;
 
 public class CharMovement : MonoBehaviour {
 
+    public static CharMovement Instance;
+
     public Animator anim;
     public float speed = 50.0f;
     float distance;
+    public bool isMouseOverUI = false;
+    public bool m_followMouse = false;
+
 	// Use this for initialization
-	void Start () {
-	
+	void Awake () {
+        Instance = this;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         // When mouse button is held down
-	    if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0) && !isMouseOverUI)
         {
+            m_followMouse = true;
+        }
+        // When mouse button is held down
+        if (Input.GetMouseButtonUp(0) || isMouseOverUI)
+        {
+            m_followMouse = false;
+        }
+        if (m_followMouse) { 
             // Get mouse position on screen
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
@@ -26,7 +40,6 @@ public class CharMovement : MonoBehaviour {
                 var dir = Input.mousePosition - pos;
                 var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                Debug.Log(angle);
                 anim.SetBool("isWalking", true);
             }
             else
@@ -42,4 +55,9 @@ public class CharMovement : MonoBehaviour {
             anim.SetBool("isWalking", false);
         }
 	}
+
+    public void MouseOverUI(bool isIt)
+    {
+        isMouseOverUI = isIt;
+    }
 }

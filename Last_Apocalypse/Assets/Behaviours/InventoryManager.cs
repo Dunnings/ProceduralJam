@@ -36,18 +36,47 @@ public class InventoryManager : MonoBehaviour {
         }
     }
 
-    public void OnInventoryItemReleased(InventoryItem ii)
+    public void OnInventoryItemReleased(InventoryItem iI)
     {
         isHoldingInvItem = false;
-        InventorySlot closest = GetNearestInventorySlot(ii.transform.position);
-        if (closest != null) {
-            ii.transform.position = closest.transform.position;
-            ii.InventorySlot = closest;
-            ii.InventorySlot.m_currentHeldItem = ii;
-            if (QuestManager.Instance.IsThisItemRequired(ii.gameObject)){
+        
+        InventorySlot closest = GetNearestInventorySlot(iI.transform.position);
+        if (closest != null)
+        {
+            iI.transform.position = closest.transform.position;
+            iI.InventorySlot = closest;
+            closest.m_currentHeldItem = iI;
+            if (QuestManager.Instance.IsThisItemRequired(iI.gameObject))
+            {
                 closest.Highlight();
             }
         }
+    }
+
+    public void PlaceItemInSlot(InventoryItem iI, InventorySlot iS)
+    {
+        iI.transform.position = iS.transform.position;
+        iI.InventorySlot = iS;
+        iS.m_currentHeldItem = iI;
+        if (QuestManager.Instance.IsThisItemRequired(iI.gameObject))
+        {
+            iS.Highlight();
+        }
+    }
+
+    public void RemoveItem(InventorySlot iS)
+    {
+        if (iS != null)
+        {
+            iS.UnHighlight();
+            iS.m_currentHeldItem = null;
+        }
+    }
+
+    public void OnInventoryItemClick(InventoryItem iI)
+    {
+        isHoldingInvItem = false;
+        iI.Place();
     }
 
     private InventorySlot GetNearestInventorySlot(Vector3 _pos)
@@ -67,5 +96,29 @@ public class InventoryManager : MonoBehaviour {
             }
         }
         return toReturn;
+    }
+
+    public int SlotsAvailable()
+    {
+        int count = 0;
+        for (int i = 0; i < m_inventorySlots.Count; i++)
+        {
+            if(m_inventorySlots[i].m_currentHeldItem != null) {
+                count++;
+            }
+        }
+        return m_inventorySlots.Count - count;
+    }
+
+    public InventorySlot NextAvailableSlot()
+    {
+        for (int i = 0; i < m_inventorySlots.Count; i++)
+        {
+            if (m_inventorySlots[i].m_currentHeldItem == null)
+            {
+                return m_inventorySlots[i];
+            }
+        }
+        return null;
     }
 }
