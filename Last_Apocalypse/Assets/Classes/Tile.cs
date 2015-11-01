@@ -3,6 +3,25 @@ using System.Collections;
 
 public class Tile : MonoBehaviour
 {
-	public enum tileType{Base, Building, Environment, NULL};
-	public tileType type;
+	public bool collidable, item;
+
+	//the material to be placed once the item is gone
+	public Material itemTakenMaterial;
+
+	void Start ()
+	{
+		if (collidable)
+		{
+			gameObject.AddComponent<BoxCollider2D>();
+		}
+	}
+	
+
+	void Update ()
+	{
+		if (!item && itemTakenMaterial != null)
+		{
+			GetComponent<MeshRenderer>().material = itemTakenMaterial;
+		}
+	}
 }

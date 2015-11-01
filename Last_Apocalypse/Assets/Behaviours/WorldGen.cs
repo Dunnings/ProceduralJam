@@ -24,17 +24,17 @@ public class WorldGen : MonoBehaviour {
 
 		for (int i = 0; i < _prefabs.Length; i++)
 		{
-			switch (_prefabs[i].GetComponent<Tile>().type)
+			switch (_prefabs[i].GetComponent<Panel>().type)
 			{
-			case Tile.tileType.Base:
+			case Panel.tileType.Base:
 				tempBase = _prefabs[i];
 				break;
 
-			case Tile.tileType.Building:
+			case Panel.tileType.Building:
 				tempBuildings.Add(_prefabs[i]);
 				break;
 
-			case Tile.tileType.Environment:
+			case Panel.tileType.Environment:
 				tempEnvironments.Add(_prefabs[i]);
 				break;
 			
