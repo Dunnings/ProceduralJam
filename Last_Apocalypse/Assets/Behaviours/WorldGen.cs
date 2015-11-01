@@ -6,7 +6,10 @@ public class WorldGen : MonoBehaviour {
 
 	GameObject[] WorldGrid;
 
-	public GameObject[] Prefabs;
+	public GameObject Player;
+
+	public GameObject[] Prefabs, Items;
+
 
 	void Start ()
 	{
@@ -69,10 +72,10 @@ public class WorldGen : MonoBehaviour {
 
 
 		//place player base
-		WorldGrid [127] = _prefabs [0] [0];
+		WorldGrid [128] = _prefabs [0] [0];
 
 		//place ALL buildings
-		while (buildingsToPlace > 1)
+		while (buildingsToPlace > 0)
 		{
 			for (int i = 0; i < 225; i++)
 			{
@@ -127,12 +130,33 @@ public class WorldGen : MonoBehaviour {
 				x++;
 			}
 
-			WorldGrid [i] = (GameObject)Instantiate (WorldGrid [i], new Vector3 (x * 9, y * 9, 0), Quaternion.identity);
+			WorldGrid [i] = (GameObject)Instantiate (WorldGrid [i], new Vector3 (x * 15, y * 15, 0), Quaternion.identity);
 
 			WorldGrid [i].transform.parent = transform;
 
 			lastY = row;
 		}
 
+		Player.transform.position = new Vector3 (120, 120, 0);
+
+
+		//place items
+		List<GameObject> spawnedObjects = new List<GameObject> ();
+
+
+		GameObject[] SpawnLocations = GameObject.FindGameObjectsWithTag ("Item");
+
+		for (int i = 0; i < SpawnLocations.Length - 1; i++)
+		{
+			int itemToSpawn = Random.Range(0, Items.Length - 1);
+
+			//sets the next spawnlocation's sprite to be the sprite of the randomly selected item
+			SpawnLocations[i].GetComponent<SpriteRenderer>().sprite = Items[itemToSpawn].GetComponent<SpriteRenderer>().sprite;
+			SpawnLocations[i].GetComponent<PickupItem>().type = Items[itemToSpawn].GetComponent<PickupItem>().type;
+
+			spawnedObjects.Add (Items[itemToSpawn]);
+		}
+
+		GameObject[] allSpawnedObjects = spawnedObjects.ToArray ();
 	}
 }
