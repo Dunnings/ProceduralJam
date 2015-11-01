@@ -19,6 +19,7 @@ public class CharMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        #region Mouse momvement
         // When mouse button is held down
         if (Input.GetMouseButtonDown(0) && !isMouseOverUI)
         {
@@ -54,7 +55,8 @@ public class CharMovement : MonoBehaviour {
         {
             anim.SetBool("isWalking", false);
         }
-	}
+        #endregion
+    }
 
     public void MouseOverUI(bool isIt)
     {
