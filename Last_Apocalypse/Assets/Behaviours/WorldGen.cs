@@ -66,15 +66,10 @@ public class WorldGen : MonoBehaviour {
 
 	void Generate (GameObject[][] _prefabs)
 	{
-
-
-
 		int row, x = 0, lastY = 0, y = 0, buildingsToPlace = _prefabs [1].Length, buildings = buildingsToPlace;
 
 		//checks if the building has been placed TRUE = PLACED, FALSE = NOT PLACED
 		bool[] buildingsPlaced = new bool[_prefabs[1].Length];
-
-
 
 
 		//place player base
