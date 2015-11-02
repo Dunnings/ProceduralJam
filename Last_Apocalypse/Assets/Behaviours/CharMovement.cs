@@ -69,10 +69,30 @@ public class CharMovement : MonoBehaviour {
                 float diffSpeed = maxSpeed - minSpeed;
                 speed = (distanceRatio * diffSpeed) + minSpeed;
             }
-
+        
+            
 		gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
                                          mousePos,
                                          1 / (speed * (Vector3.Distance(gameObject.transform.position, mousePos))) * Time.deltaTime);
+
+            //Please father forgive me for the magic numbers 
+            if(transform.position.x > 164-7)
+            {
+                transform.position = new Vector2(164 - 7, transform.position.y);
+            }
+            if (transform.position.x < -7)
+            {
+                transform.position = new Vector2(-7, transform.position.y);
+            }
+            if (transform.position.y > 164-7)
+            {
+                transform.position = new Vector2(transform.position.x, 164 - 7);
+            }
+            if (transform.position.y < -7)
+            {
+                transform.position = new Vector2(transform.position.x, -7);
+            }
+
         }
         else
         {
