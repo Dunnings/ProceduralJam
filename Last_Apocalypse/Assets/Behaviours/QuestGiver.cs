@@ -15,7 +15,7 @@ public class QuestGiver : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		Setup ();
+		Setup ("Assets/Dialogue/Day1_scene1.txt");
 		StartCoroutine (AnCouroutine());
     }
 
@@ -51,9 +51,9 @@ public class QuestGiver : MonoBehaviour
 		}
 	}
 
-    void Setup()
+    void Setup(string filepath)
     {
-        StreamReader inputFile = new StreamReader("Assets/Dialogue/Day1_scene1.txt");
+        StreamReader inputFile = new StreamReader(filepath);
 
         while (!inputFile.EndOfStream)
         {
