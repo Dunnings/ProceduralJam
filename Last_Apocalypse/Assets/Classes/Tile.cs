@@ -14,7 +14,7 @@ public class Tile : MonoBehaviour
         m_myRenderer = GetComponent<MeshRenderer>();
         if (collidable)
 		{
-			gameObject.AddComponent<BoxCollider2D>();
+			//gameObject.AddComponent<BoxCollider2D>();
 		}
 	}
 }
