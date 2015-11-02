@@ -6,9 +6,10 @@ public class WorldGen : MonoBehaviour {
 
 	GameObject[] WorldGrid;
 
-	public GameObject Player;
+	public GameObject Player, ItemParent;
 
-	public GameObject[] Prefabs, Items;
+	public GameObject[] Prefabs;
+
 
 	public int WorldPanelXYCount, PanelXYCount;
 
@@ -155,17 +156,38 @@ public class WorldGen : MonoBehaviour {
 		//all of the item locations
 		GameObject[] SpawnLocations = GameObject.FindGameObjectsWithTag ("Item");
 
-		for (int i = 0; i < SpawnLocations.Length - 1; i++)
+		//copy children so selection is not altered by adding each object.
+		GameObject[] children = new GameObject[ItemParent.transform.childCount];
+
+		for (int i = 0; i < ItemParent.transform.childCount; i++)
 		{
-			int itemToSpawn = Random.Range(0, Items.Length - 1);
-
-			//sets the next spawnlocation's sprite to be the sprite of the randomly selected item
-			SpawnLocations[i].GetComponent<SpriteRenderer>().sprite = Items[itemToSpawn].GetComponent<SpriteRenderer>().sprite;
-			SpawnLocations[i].GetComponent<PickupItem>().type = Items[itemToSpawn].GetComponent<PickupItem>().type;
-
-			spawnedObjects.Add (Items[itemToSpawn]);
+			children[i] = ItemParent.transform.GetChild(i).gameObject;
 		}
 
-		GameObject[] allSpawnedObjects = spawnedObjects.ToArray ();
+		for (int i = 0; i < SpawnLocations.Length - 1; i++)
+		{
+			//select a random number from 1 to the size of children
+			int itemToSpawn = Random.Range(0, children.Length - 1);
+
+			//selects a random int that corresponds to a different item
+			//GameObject newObject = ItemParent.transform.GetChild(itemToSpawn);
+
+			//if the selected item has already been spawned
+			if (spawnedObjects.Contains(ItemParent.transform.GetChild(itemToSpawn).gameObject))
+			{
+				GameObject newObject = new GameObject("newItem");
+				newObject = ItemParent.transform.GetChild(itemToSpawn).gameObject;
+
+				newObject.transform.position = SpawnLocations[i].transform.position;
+
+				newObject.transform.parent = ItemParent.transform;
+			}
+			else
+			{
+				ItemParent.transform.GetChild(itemToSpawn).position = SpawnLocations[i].transform.position;
+			}
+
+			//ItemParent.transform.GetChild(itemToSpawn).position = SpawnLocations[i].transform.position;
+		}
 	}
 }
