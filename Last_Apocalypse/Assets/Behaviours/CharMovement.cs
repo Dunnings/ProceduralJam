@@ -76,17 +76,17 @@ public class CharMovement : MonoBehaviour {
                                          1 / (speed * (Vector3.Distance(gameObject.transform.position, mousePos))) * Time.deltaTime);
 
             //Please father forgive me for the magic numbers 
-            if(transform.position.x > 164-7)
+            if(transform.position.x > 75 - 7)
             {
-                transform.position = new Vector2(164 - 7, transform.position.y);
+                transform.position = new Vector2(75 - 7, transform.position.y);
             }
             if (transform.position.x < -7)
             {
                 transform.position = new Vector2(-7, transform.position.y);
             }
-            if (transform.position.y > 164-7)
+            if (transform.position.y > 75 - 7)
             {
-                transform.position = new Vector2(transform.position.x, 164 - 7);
+                transform.position = new Vector2(transform.position.x, 75 - 7);
             }
             if (transform.position.y < -7)
             {

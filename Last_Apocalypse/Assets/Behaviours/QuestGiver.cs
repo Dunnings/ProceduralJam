@@ -6,11 +6,18 @@ using System.Collections.Generic;
 
 public class QuestGiver : MonoBehaviour
 {
+    public static QuestGiver Instance;
+    
 	public GameObject display, pc;
 	Text textComp;
 	Animator anim;
 	List<string> messages = new List<string>();
 	bool spacebar;
+
+    void Awake() {
+        Instance = this;
+
+    }
 
     // Use this for initialization
     void Start()
