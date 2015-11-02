@@ -6,17 +6,22 @@ public class CharMovement : MonoBehaviour {
     public static CharMovement Instance;
 
     public Animator anim;
-    public float speed = 50.0f;
+    public float speed = 0.0f;
     float distance;
+    float maxDistance = 1.5f;
+    float minDistance = 0.1f;
+    float maxSpeed = 0.5f;
+    float minSpeed = 2f;
 	public bool isMouseOverUI = false, m_followMouse = false;
 
-	Collision2D col;
+    Collision2D col;
 
-	// Use this for initialization
-	void Awake () {
-		col = new Collision2D ();
+    // Use this for initialization
+    void Awake()
+    {
+        col = new Collision2D();
         Instance = this;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -48,6 +53,20 @@ public class CharMovement : MonoBehaviour {
             else
             {
                 anim.SetBool("isWalking", false);
+            }
+            if (distance > maxDistance)
+            {
+                speed = maxSpeed;
+            }
+            else if (distance < minDistance)
+            {
+                speed = minSpeed;
+            }
+            else
+            {
+                float distanceRatio = (distance - minDistance) / (maxDistance - minDistance);
+                float diffSpeed = maxSpeed - minSpeed;
+                speed = (distanceRatio * diffSpeed) + minSpeed;
             }
 
 		gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
