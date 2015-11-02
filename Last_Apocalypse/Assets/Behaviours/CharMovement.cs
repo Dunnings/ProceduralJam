@@ -8,11 +8,13 @@ public class CharMovement : MonoBehaviour {
     public Animator anim;
     public float speed = 50.0f;
     float distance;
-    public bool isMouseOverUI = false;
-    public bool m_followMouse = false;
+	public bool isMouseOverUI = false, m_followMouse = false;
+
+	Collision2D col;
 
 	// Use this for initialization
 	void Awake () {
+		col = new Collision2D ();
         Instance = this;
 	}
 	
@@ -47,9 +49,10 @@ public class CharMovement : MonoBehaviour {
             {
                 anim.SetBool("isWalking", false);
             }
-            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
-                                             mousePos,
-                                             1 / (speed * (Vector3.Distance(gameObject.transform.position, mousePos))) * Time.deltaTime);
+
+		gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
+                                         mousePos,
+                                         1 / (speed * (Vector3.Distance(gameObject.transform.position, mousePos))) * Time.deltaTime);
         }
         else
         {
