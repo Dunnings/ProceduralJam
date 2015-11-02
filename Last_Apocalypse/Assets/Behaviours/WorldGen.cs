@@ -164,10 +164,16 @@ public class WorldGen : MonoBehaviour {
 			children[i] = ItemParent.transform.GetChild(i).gameObject;
 		}
 
+		int s = 0;
+
 		for (int i = 0; i < SpawnLocations.Length - 1; i++)
 		{
+			if (s >= SpawnLocations.Length - 1)
+			{
+				s = 0;
+			}
 			//select a random number from 1 to the size of children
-			int itemToSpawn = Random.Range(0, children.Length - 1);
+			int itemToSpawn = s;
 
 			//selects a random int that corresponds to a different item
 			//GameObject newObject = ItemParent.transform.GetChild(itemToSpawn);
@@ -175,8 +181,7 @@ public class WorldGen : MonoBehaviour {
 			//if the selected item has already been spawned
 			if (spawnedObjects.Contains(ItemParent.transform.GetChild(itemToSpawn).gameObject))
 			{
-				GameObject newObject = new GameObject("newItem");
-				newObject = ItemParent.transform.GetChild(itemToSpawn).gameObject;
+				GameObject newObject = ItemParent.transform.GetChild(itemToSpawn).gameObject;
 
 				newObject.transform.position = SpawnLocations[i].transform.position;
 
@@ -185,9 +190,10 @@ public class WorldGen : MonoBehaviour {
 			else
 			{
 				ItemParent.transform.GetChild(itemToSpawn).position = SpawnLocations[i].transform.position;
+				spawnedObjects.Add(ItemParent.transform.GetChild(itemToSpawn).gameObject);
 			}
 
-			//ItemParent.transform.GetChild(itemToSpawn).position = SpawnLocations[i].transform.position;
+			s++;
 		}
 	}
 }

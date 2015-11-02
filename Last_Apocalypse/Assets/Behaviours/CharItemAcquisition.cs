@@ -8,12 +8,17 @@ public class CharItemAcquisition : MonoBehaviour {
     public KeyCode m_pickUpKey = KeyCode.Space;
     public float m_pickupDistance = 0.2f;
 
-    //TO BE CHANGED TO WORLD GEN LIST OF OBJECTS
-    public List<Item> m_listOfObjects = new List<Item>();
+    List<Item> m_listOfObjects = new List<Item>();
+
+	public GameObject m_objectParent;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+	{
+		for (int i = 0; i < m_objectParent.transform.childCount; i++)
+		{
+			m_listOfObjects.Add (m_objectParent.transform.GetChild(i).GetComponent<Item>());
+		}
 	}
 	
 	// Update is called once per frame
