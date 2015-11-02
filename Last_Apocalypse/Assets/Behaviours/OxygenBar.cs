@@ -49,7 +49,7 @@ public class OxygenBar : MonoBehaviour {
         }
         if(m_oxygenPercent <= 0f)
         {
-            //GAME OVER
+            Application.LoadLevel(1);
         }
     }
 }
