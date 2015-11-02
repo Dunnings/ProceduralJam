@@ -19,6 +19,7 @@ public class CharMovement : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
+        Application.targetFrameRate = 60;
         col = new Collision2D();
         Instance = this;
     }
