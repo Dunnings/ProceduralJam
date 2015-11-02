@@ -15,13 +15,4 @@ public class Tile : MonoBehaviour
 			gameObject.AddComponent<BoxCollider2D>();
 		}
 	}
-	
-
-	void Update ()
-	{
-		if (!item && itemTakenMaterial != null)
-		{
-			GetComponent<MeshRenderer>().material = itemTakenMaterial;
-		}
-	}
 }
