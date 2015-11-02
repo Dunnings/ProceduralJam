@@ -10,8 +10,8 @@ public class CharMovement : MonoBehaviour {
     float distance;
     float maxDistance = 1.5f;
     float minDistance = 0.1f;
-    float maxSpeed = 0.5f;
-    float minSpeed = 2f;
+    public float maxSpeed = 0.5f;
+    public float minSpeed = 2f;
 	public bool isMouseOverUI = false, m_followMouse = false;
 
     Collision2D col;

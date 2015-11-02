@@ -17,13 +17,4 @@ public class Tile : MonoBehaviour
 			gameObject.AddComponent<BoxCollider2D>();
 		}
 	}
-	
-
-	//void Update ()
-	//{
-	//	if (!item && itemTakenMaterial != null)
-	//	{
-    //        m_myRenderer.material = itemTakenMaterial;
-	//	}
-	//}
 }

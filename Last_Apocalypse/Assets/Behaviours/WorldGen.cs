@@ -10,10 +10,15 @@ public class WorldGen : MonoBehaviour {
 
 	public GameObject[] Prefabs, Items;
 
+	public int WorldPanelXYCount, PanelXYCount;
+
+	int worldSize;
 
 	void Start ()
 	{
-		WorldGrid = new GameObject[225];
+		worldSize = WorldPanelXYCount * WorldPanelXYCount;
+
+		WorldGrid = new GameObject[worldSize];
 
 		Generate (splitPrefabs(Prefabs));
 	}
@@ -72,17 +77,17 @@ public class WorldGen : MonoBehaviour {
 
 
 		//place player base
-		WorldGrid [128] = _prefabs [0] [0];
+		WorldGrid [(worldSize/2)] = _prefabs [0] [0];
 
 		//place ALL buildings
 		while (buildingsToPlace > 0)
 		{
-			for (int i = 0; i < 225; i++)
+			for (int i = 0; i < worldSize; i++)
 			{
 				if (WorldGrid[i] == null)
 				{
 					//randomly place things (kind of equally)
-					if (Random.Range(0, ((int)(225/_prefabs[1].Length))) == 0)
+					if (Random.Range(0, ((int)(worldSize/_prefabs[1].Length))) == 0)
 					{
 						int randombuilding = Random.Range (0, buildings); 
 
@@ -110,7 +115,7 @@ public class WorldGen : MonoBehaviour {
 		}
 
 		//now fill the gaps with random environment tiles
-		for (int i = 0; i < 225; i++)
+		for (int i = 0; i < worldSize; i++)
 		{
 			if (WorldGrid[i] == null)
 			{
@@ -119,9 +124,9 @@ public class WorldGen : MonoBehaviour {
 		}
 		
 		
-		for (int i = 0; i < 225; i++)
+		for (int i = 0; i < worldSize; i++)
 		{
-			row = i / 15;
+			row = i / WorldPanelXYCount;
 
 			if (row != lastY) {
 				y++;
@@ -130,20 +135,24 @@ public class WorldGen : MonoBehaviour {
 				x++;
 			}
 
-			WorldGrid [i] = (GameObject)Instantiate (WorldGrid [i], new Vector3 (x * 15, y * 15, 0), Quaternion.identity);
+			WorldGrid [i] = (GameObject)Instantiate (WorldGrid [i], new Vector3 (x * PanelXYCount, y * PanelXYCount, 0), Quaternion.identity);
 
 			WorldGrid [i].transform.parent = transform;
 
 			lastY = row;
 		}
 
-		Player.transform.position = new Vector3 (120, 120, 0);
+		int spawnLoc = (WorldPanelXYCount / 2) * PanelXYCount;
+
+		Player.transform.position = new Vector3 (spawnLoc, spawnLoc, 0);
 
 
 		//place items
+
+		//this is the list of spawned objects that can be used by the questgiver system
 		List<GameObject> spawnedObjects = new List<GameObject> ();
 
-
+		//all of the item locations
 		GameObject[] SpawnLocations = GameObject.FindGameObjectsWithTag ("Item");
 
 		for (int i = 0; i < SpawnLocations.Length - 1; i++)
