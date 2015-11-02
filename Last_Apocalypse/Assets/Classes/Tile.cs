@@ -7,12 +7,23 @@ public class Tile : MonoBehaviour
 
 	//the material to be placed once the item is gone
 	public Material itemTakenMaterial;
+    public MeshRenderer m_myRenderer;
 
 	void Start ()
 	{
-		if (collidable)
+        m_myRenderer = GetComponent<MeshRenderer>();
+        if (collidable)
 		{
 			gameObject.AddComponent<BoxCollider2D>();
 		}
 	}
+	
+
+	//void Update ()
+	//{
+	//	if (!item && itemTakenMaterial != null)
+	//	{
+    //        m_myRenderer.material = itemTakenMaterial;
+	//	}
+	//}
 }
