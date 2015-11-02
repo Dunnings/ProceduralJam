@@ -23,7 +23,7 @@ public class CharItemAcquisition : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(m_pickUpKey) && InventoryManager.Instance.SlotsAvailable() > 0)
+        if (Input.GetMouseButtonDown(1) && InventoryManager.Instance.SlotsAvailable() > 0)
         {
             Item closestObject = GetClosestItem();
             if(closestObject != null)

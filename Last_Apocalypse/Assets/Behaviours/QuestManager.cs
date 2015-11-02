@@ -44,7 +44,7 @@ public class QuestManager : MonoBehaviour {
         List<Item> potentialItems = new List<Item>();
         for (int i = 0; i < m_itemParent.transform.childCount; i++)
         {
-            if (m_itemParent.transform.GetChild(i).GetComponent<Item>().isPlaced) {
+            if (m_itemParent.transform.GetChild(i).gameObject.activeSelf && m_itemParent.transform.GetChild(i).GetComponent<Item>().isPlaced) {
                 potentialItems.Add(m_itemParent.transform.GetChild(i).GetComponent<Item>());
             }
         }
@@ -61,6 +61,7 @@ public class QuestManager : MonoBehaviour {
         else
         {
             //SUCCESS YOU WIN
+            Application.LoadLevel("_Craig");
         }
     }
 

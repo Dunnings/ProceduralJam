@@ -8,6 +8,6 @@ public class RetryScript : MonoBehaviour
 
     public void LoadLevel()
     {
-        Application.LoadLevel(0);
+        Application.LoadLevel("_David");
     }
 }

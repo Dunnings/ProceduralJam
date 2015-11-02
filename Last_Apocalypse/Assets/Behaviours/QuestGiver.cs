@@ -30,9 +30,13 @@ public class QuestGiver : MonoBehaviour
     void Update()
     {
 		spacebar = false;
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetMouseButtonDown (1)) {
 			spacebar = true;
 		}
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Application.LoadLevel("_David");
+        }
     }
 
 	IEnumerator AnCouroutine()
@@ -53,9 +57,10 @@ public class QuestGiver : MonoBehaviour
 					textComp.text = ""; //Reset text
 				}
 				anim.SetBool("talking", true);
-				yield return new WaitForSeconds(0.05f);
+				yield return new WaitForSeconds(0.025f);
 			}
 		}
+        Application.LoadLevel("_David");
 	}
 
     void Setup(string filepath)
