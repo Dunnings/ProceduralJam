@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
@@ -35,7 +36,10 @@ public class QuestGiver : MonoBehaviour
         }
         #endregion
 
-        TextMesh textComp = display.GetComponent<TextMesh>();
+        //TextMesh textComp = display.GetComponent<TextMesh>();
+		//GUIText textComp2 = display.GetComponent<GUIText> ();
+		Text textComp = display.GetComponent<Text>();
+		textComp.text = "";
 
         #region Text Loop
         int lineCount = 0;
@@ -50,18 +54,19 @@ public class QuestGiver : MonoBehaviour
 
             for (int j = 0; j < messages[i].Length; j++)//For each message...
             {
-				string word = "", output = "";
+				/*string word = "", output = "";
 				int jPos = j;
 				bool skip = false;
                 while (messages[i].Length > CharacterLimitPerLine)//If the message can't fit on the line...
                 {
+					int temp = messages[i].Length;
                     //i = line number of text file
                     //j = position along line
 					if (messages[i][jPos] != ' ' && !skip)//If no space character
                     {
                         word += messages[i][jPos]; //Add char to word
                         jPos++;
-						if (jPos+1 > messages[i].Length)
+						if (jPos > temp-2)
 							skip = true;
 						else
 							skip = false;
@@ -74,9 +79,12 @@ public class QuestGiver : MonoBehaviour
                             //Take the existing message, trim off the end
                             string otherOutput = "";
 
-                            for (int o = 0; o < messages[i].Length - output.Length; o++)
+							int start = output.Length;
+							int stop = messages[i].Length;
+
+                            for (int o = start; o < stop; o++)//msgs[i].L - output.L = length of the rest of the string
                             {
-                                otherOutput += messages[i][o + output.Length];
+                                otherOutput += messages[i][o];
                             }
                             messages.Insert(i + 1, otherOutput);
                             messages[i] = output;
@@ -87,9 +95,13 @@ public class QuestGiver : MonoBehaviour
 							output += ' ';
                             word = "";
 							jPos++;
+							if (jPos > messages[i].Length-2)
+								skip = true;
+							else
+								skip = false;
                         }
                     }
-                }
+                }*/
                 //yield WaitForSeconds(0.5);
                 textComp.text += messages[i][j];
             }
