@@ -13,7 +13,16 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
-        MoveEnemy();
+        if(Vector3.Distance(m_Spawner.Player.transform.position, this.transform.position) <= 5.0f)
+        {        
+            MoveEnemy();
+        }
+        else
+        {
+            this.GetComponent<Rigidbody>().velocity = new Vector3(0.0f,0.0f,0.0f);
+        }
+
+
     }
 
     /// <summary>
@@ -34,7 +43,7 @@ public class Enemy : MonoBehaviour
             vel = new Vector3(-1, vel.y, 0);   
         }
 
-        if (this.GetComponent<Rigidbody>().position.y <= m_Spawner.Player.transform.position.y)
+        if (this.GetComponent<Rigidbody>().position.y <= m_Spawner.Player.transform.position.y )
         {
             vel = new Vector3(vel.x, 1, 0);   
         }
