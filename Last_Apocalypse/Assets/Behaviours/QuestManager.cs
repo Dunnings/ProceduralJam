@@ -51,7 +51,7 @@ public class QuestManager : MonoBehaviour {
         if (potentialItems.Count > 0)
         {
             m_requiredItems.Add(potentialItems[Random.Range(0, potentialItems.Count)].gameObject.name);
-            m_questText.text = "- Collect an " + m_requiredItems[0];
+            m_questText.text = "- Collect a " + m_requiredItems[0];
             TimeManager.Instance.m_time = 6f;
             m_oxy.m_decreaseOxygen = true;
             m_oxy.m_oxygenPercent = 1f;
