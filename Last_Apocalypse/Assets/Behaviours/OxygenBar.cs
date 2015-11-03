@@ -2,7 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class OxygenBar : MonoBehaviour {
+public class OxygenBar : MonoBehaviour 
+{
+    public static OxygenBar Instance; 
 
     public float m_oxygenDecreasePerSecond = 0.05f;
 
@@ -18,8 +20,14 @@ public class OxygenBar : MonoBehaviour {
     public RectTransform m_oxyBar;
     private float m_startWidth;
 
+    void Awake()
+    {
+        Instance = this;
+    }
+
 	// Use this for initialization
 	void Start () {
+        
         m_startWidth = m_oxyBar.sizeDelta.x;
 	}
 	

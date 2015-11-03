@@ -17,7 +17,7 @@ public class QuestManager : MonoBehaviour {
 
     public Text m_questText;
 
-    public List<string> m_requiredItems = new List<string>();
+    public List<GameObject> m_requiredItems = new List<GameObject>();
     
 	//Ai stuffs
 	public GameObject display, pc, speech, CharMover;
@@ -55,7 +55,7 @@ public class QuestManager : MonoBehaviour {
     {
         for (int i = 0; i < m_requiredItems.Count; i++)
         {
-            if (m_requiredItems[i] == item.name)
+            if (m_requiredItems[i].name == item.name)
             {
                 return true;
             }
@@ -75,8 +75,8 @@ public class QuestManager : MonoBehaviour {
         }
         if (potentialItems.Count > 0)
         {
-            m_requiredItems.Add(potentialItems[Random.Range(0, potentialItems.Count)].gameObject.name);
-            m_questText.text = "- Collect a " + m_requiredItems[0];
+            m_requiredItems.Add(potentialItems[Random.Range(0, potentialItems.Count)].gameObject);
+            m_questText.text = "- Collect a " + m_requiredItems[0].name;
             TimeManager.Instance.m_time = 6f;
             m_oxy.m_decreaseOxygen = true;
             m_oxy.m_oxygenPercent = 1f;
@@ -135,5 +135,15 @@ public class QuestManager : MonoBehaviour {
     public void FailedQuest()
     {
         //GAME OVER
+    }
+
+    public void PickedUpObject()
+    {
+        m_questText.text = "- Return the " + m_requiredItems[0].name + " to the base";
+    }
+
+    public void DroppedObject()
+    {
+        m_questText.text = "- Collect a " + m_requiredItems[0].name;
     }
 }
