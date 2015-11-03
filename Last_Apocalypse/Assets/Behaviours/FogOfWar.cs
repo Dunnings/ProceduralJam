@@ -23,7 +23,8 @@ public class FogOfWar : MonoBehaviour
     public int sightRadius;
     public float sightBuffer;
 
-    float MOD = 0f;
+    float MOD = 14f;
+    float playerMOD = 14f;
 
     ///// <summary>
     ///// Set up components for depth fog
@@ -109,9 +110,9 @@ public class FogOfWar : MonoBehaviour
         }
 
         //take player pos and clear fog
-        float posX = player.transform.position.x * 100.0f / tileWidth;
-        float posY = player.transform.position.y * 100.0f / tileHeight;
-        ClearFog((int)posX, (int)posY, fogTiles, false);
+        //float posX = player.transform.position.x * 100.0f / tileWidth;
+        //float posY = player.transform.position.y * 100.0f / tileHeight;
+        //ClearFog((int)posX, (int)posY, fogTiles, false);
     }
     
     /// <summary>
@@ -150,6 +151,8 @@ public class FogOfWar : MonoBehaviour
     /// <param name="visibility"></param>
     private void ClearFog(int _x, int _y, GameObject[,] fogTiles, bool visibility)
     {
+        _x += (int)playerMOD;
+        _y += (int)playerMOD;
         ////iterate down the line of sight
         //for (int rad = sightRadius; rad >= 0; rad--)
         //{
