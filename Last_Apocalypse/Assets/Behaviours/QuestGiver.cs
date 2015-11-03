@@ -8,21 +8,21 @@ public class QuestGiver : MonoBehaviour
 {
     public static QuestGiver Instance;
     
-	public GameObject display, pc;
+	public GameObject display, pc, speech;
 	Text textComp;
-	Animator anim;
+	Animator anim, anim_speech;
 	List<string> messages = new List<string>();
 	bool spacebar;
 
     void Awake() {
         Instance = this;
-
     }
 
     // Use this for initialization
     void Start()
     {
-		Setup ("Assets/Dialogue/Day1_scene1.txt");
+		//Setup ("Assets/Dialogue/Day1_scene1.txt");
+		Setup ("Assets/Dialogue/test.txt");
 		StartCoroutine (AnCouroutine());
     }
 
@@ -41,6 +41,8 @@ public class QuestGiver : MonoBehaviour
 
 	IEnumerator AnCouroutine()
 	{
+		anim_speech.SetBool ("open", true);
+		yield return new WaitForSeconds (2);
 		for (int i = 0; i < messages.Count; i++)//For each packet of messages...
 		{
 			for (int j = 0; j < messages[i].Length; j++)//For each message...
@@ -60,7 +62,11 @@ public class QuestGiver : MonoBehaviour
 				yield return new WaitForSeconds(0.025f);
 			}
 		}
-        Application.LoadLevel("_David");
+		anim.SetBool("talking", false);
+		anim_speech.SetBool ("open", false);
+		yield return new WaitForSeconds (2);
+		pc.gameObject.SetActive (false);
+        //Application.LoadLevel("_David");
 	}
 
     void Setup(string filepath)
@@ -70,11 +76,13 @@ public class QuestGiver : MonoBehaviour
         while (!inputFile.EndOfStream)
         {
             messages.Add(inputFile.ReadLine());
-        }
+		}
+		pc.gameObject.SetActive (true);
 		anim = pc.GetComponent<Animator> ();
 		textComp = display.GetComponent<Text>();
 		textComp.text = "";
-    }
+		anim_speech = speech.GetComponent<Animator> ();
+	}
 }
 //Press button to use quest giver
 //QG outputs text depending on if player has spoken to QG before + what day it is

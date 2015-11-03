@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.IO;
 
 public class QuestManager : MonoBehaviour {
 
@@ -18,13 +19,36 @@ public class QuestManager : MonoBehaviour {
 
     public List<string> m_requiredItems = new List<string>();
     
+	//Ai stuffs
+	public GameObject display, pc, speech;
+	Text textComp;
+	Animator anim, anim_speech;
+	List<string> messages = new List<string>();
+	bool spacebar;
+
 	void Awake () {
         Instance = this;
 	}
 	
 	void Start () {
+		pc.gameObject.SetActive (true);
+		anim = pc.GetComponent<Animator> ();
+		textComp = display.GetComponent<Text>();
+		textComp.text = "";
+		anim_speech = speech.GetComponent<Animator> ();
+
         GenerateNewQuest();
     }
+	// Update is called once per frame
+	void Update()
+	{
+		spacebar = false;
+		if (Input.GetMouseButtonDown (1)) {
+			spacebar = true;
+		}
+		//if (Input.GetKeyDown(KeyCode.F1))
+		//	Application.LoadLevel("_David");
+	}
 
     public bool IsThisItemRequired(GameObject item)
     {
@@ -57,6 +81,7 @@ public class QuestManager : MonoBehaviour {
             m_oxy.m_oxygenPercent = 1f;
             day++;
             m_dayCount.text = "Day " + day;
+			StartCoroutine (AnCouroutine());
         }
         else
         {
@@ -64,6 +89,45 @@ public class QuestManager : MonoBehaviour {
             Application.LoadLevel("_Craig");
         }
     }
+
+	IEnumerator AnCouroutine()
+	{
+		string filepath = "Assets/Dialogue/Day" + day + ".txt";
+		StreamReader inputFile = new StreamReader(filepath);
+		messages.Clear ();
+		while (!inputFile.EndOfStream)
+		{
+			messages.Add(inputFile.ReadLine());
+		}
+
+		anim_speech.SetBool ("open", true);
+		pc.gameObject.SetActive (true);
+		yield return new WaitForSeconds (1.5);
+		for (int i = 0; i < messages.Count; i++)//For each packet of messages...
+		{
+			for (int j = 0; j < messages[i].Length; j++)//For each message...
+			{
+				if (messages[i][j] != '#')
+					textComp.text += messages[i][j];
+				
+				if (messages[i][j] == '#')
+				{
+					anim.SetBool("talking", false);
+					while(!spacebar)
+						yield return null;
+					
+					textComp.text = ""; //Reset text
+				}
+				anim.SetBool("talking", true);
+				yield return new WaitForSeconds(0.025f);
+			}
+		}
+		anim.SetBool("talking", false);
+		anim_speech.SetBool ("open", false);
+		yield return new WaitForSeconds (2);
+		pc.gameObject.SetActive (false);
+		//Application.LoadLevel("_David");
+	}
 
     public void FailedQuest()
     {
