@@ -24,15 +24,15 @@ public class CharItemAcquisition : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (Input.GetMouseButtonDown(1) && InventoryManager.Instance.SlotsAvailable() > 0)
-        {
-            Item closestObject = GetClosestItem();
+		{
+			m_anim.Play("player_poke");
+			Item closestObject = GetClosestItem();
             if(closestObject != null)
             {
                 Debug.Log(Vector3.Distance(transform.position, closestObject.transform.position) < m_pickupDistance);
                 if (Vector3.Distance(transform.position, closestObject.transform.position) < m_pickupDistance)
                 {
                     closestObject.PickUp();
-                    m_anim.Play("player_poke");
                 }
             }
         }
