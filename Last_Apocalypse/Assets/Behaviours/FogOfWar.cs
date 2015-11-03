@@ -16,11 +16,15 @@ public class FogOfWar : MonoBehaviour
     public GameObject player;  
 
     //Level width and height
-    int mapWidth = 165;
-    int mapHeight = 165;
-    int tileWidth = 100;
-    int tileHeight = 100;
-    public int sightRadius, sightBuffer;
+    int mapWidth = 330;
+    int mapHeight = 330;
+    int tileWidth = 50;
+    int tileHeight = 50;
+    public int sightRadius;
+    public float sightBuffer;
+
+    float MOD = 14f;
+    float playerMOD = 14f;
 
     ///// <summary>
     ///// Set up components for depth fog
@@ -98,20 +102,17 @@ public class FogOfWar : MonoBehaviour
                 fogTiles[x, y] = new GameObject("fog-" + x + "-" + y);
                 fogTiles[x, y].transform.parent = parent.transform;
                 //have to minus 7 because sam creates the world from -7,-7
-                fogTiles[x, y].transform.position = new Vector3(x * (tileWidth / 100.0f) - 7.0f, y * (tileHeight / 100.0f) - 7.0f, 0.0f);
+                fogTiles[x, y].transform.position = new Vector3(x * (tileWidth / 100.0f) - MOD, y * (tileHeight / 100.0f) - MOD, 0.0f);
                 SpriteRenderer f = fogTiles[x, y].AddComponent<SpriteRenderer>();
                 f.sprite = _fogSprite;
                 f.sortingOrder = 32767;
             }
         }
 
-        if (player != null)
-        {
-            //take player pos and clear fog
-            float posX = player.transform.position.x * 100.0f / tileWidth;
-            float posY = player.transform.position.y * 100.0f / tileHeight;
-            ClearFog((int)posX, (int)posY, fogTiles, false);
-        }
+        //take player pos and clear fog
+        //float posX = player.transform.position.x * 100.0f / tileWidth;
+        //float posY = player.transform.position.y * 100.0f / tileHeight;
+        //ClearFog((int)posX, (int)posY, fogTiles, false);
     }
     
     /// <summary>
@@ -119,26 +120,23 @@ public class FogOfWar : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (player != null)
+        //get array pos from player pos
+        float posX = (player.transform.position.x * 100.0f / tileWidth) + MOD;
+        float posY = (player.transform.position.y * 100.0f / tileHeight) + MOD;
+
+        //if the player has moved into the sight buffer update FoW
+        if (posX >= pastPosX + sightBuffer || posX <= pastPosX - sightBuffer ||
+            posY >= pastPosY + sightBuffer || posY <= pastPosY - sightBuffer)
         {
-            //get array pos from player pos
-            float posX = (player.transform.position.x * 100.0f / tileWidth) + 7;
-            float posY = (player.transform.position.y * 100.0f / tileHeight) + 7;
+            
+            ClearFog((int)posX, (int)posY, blackFog, false);
+            ClearFog((int)pastPosX, (int)pastPosY, alphaFog, true);
+            ClearFog((int)posX, (int)posY, alphaFog, false);            
 
-            //if the player has moved into the sight buffer update FoW
-            if (posX >= pastPosX + sightBuffer || posX <= pastPosX - sightBuffer ||
-                posY >= pastPosY + sightBuffer || posY <= pastPosY - sightBuffer)
-            {
-
-                ClearFog((int)posX, (int)posY, blackFog, false);
-                ClearFog((int)pastPosX, (int)pastPosY, alphaFog, true);
-                ClearFog((int)posX, (int)posY, alphaFog, false);
-
-                //reset pastPosition
-                pastPosX = posX;
-                pastPosY = posY;
-            }
-        }
+            //reset pastPosition
+            pastPosX = posX;
+            pastPosY = posY;
+        }        
     }
 
     /// <summary>
@@ -153,6 +151,8 @@ public class FogOfWar : MonoBehaviour
     /// <param name="visibility"></param>
     private void ClearFog(int _x, int _y, GameObject[,] fogTiles, bool visibility)
     {
+        _x += (int)playerMOD;
+        _y += (int)playerMOD;
         ////iterate down the line of sight
         //for (int rad = sightRadius; rad >= 0; rad--)
         //{
