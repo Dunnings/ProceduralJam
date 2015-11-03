@@ -11,8 +11,11 @@ public class EnemySpawner : MonoBehaviour
     //Time delay to spawn enemy
     public float SpawnTime;
     //enemy type for spawner
-    public GameObject Enemy;
+    public GameObject m_Enemy;
 
+    public GameObject Player;
+
+    private int SpawnStack;
     //counter for amount spawned
     private int AmountSpawned;
     //counter for spawning
@@ -27,27 +30,29 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        SpawnStack = SpawnerCapactity - 1;
         //set up SpawnnCounter 
         SpawnCounter = SpawnTime;
-        //set up inital Spawned amount 
+        //set up initial Spawned amount 
         AmountSpawned = 0;
 
         //loop over amount of enemies to spawn
-        for (int i = 0; i < SpawnAmount; i++)
+        for (int i = 0; i < SpawnerCapactity; i++)
         {
             //scene name with iterator
             string eName = "Enemy - " + i;
             //create object and set initial state to inactive
-            GameObject CurrentEnemy = new GameObject(eName);
+            GameObject enemy = GameObject.Instantiate(m_Enemy, new Vector2(0.0f,0.0f), Quaternion.identity)as GameObject;
+            enemy.name = eName;
 
-            //give Enemy reference to Enemy spawner
-            Enemy m_enemyScript = CurrentEnemy.AddComponent<Enemy>();
-            m_enemyScript.m_Spawner = this;
+            enemy.GetComponent<Enemy>().m_Spawner = this;
+            enemy.transform.position = this.transform.position;
+            enemy.transform.parent = this.transform;
 
-            CurrentEnemy.transform.parent = this.transform;
+            enemy.SetActive(false);
 
             //add to spawn pool
-            m_Enemies.Add(CurrentEnemy);
+            m_Enemies.Add(enemy);
         }
     }
 
@@ -58,20 +63,39 @@ public class EnemySpawner : MonoBehaviour
     {
         //if count down has hit or surpassed 0 and Amount currently 
         //spawned is not => the SpawnAmount
-        if(SpawnCounter <= 0.0f && AmountSpawned >= SpawnAmount)
-        {   
+        if(SpawnCounter <= 0.0f && AmountSpawned < SpawnAmount)
+        {
+            if (!m_Enemies[SpawnStack].activeSelf)
+            {
+                m_Enemies[SpawnStack].transform.position = this.transform.position;
+                m_Enemies[SpawnStack].SetActive(true);
 
-            
-            //reset counter 
-            SpawnCounter = SpawnTime;
-            //increment amount of enemies spawned from this spawner
-            AmountSpawned++;
+                m_Enemies[SpawnStack].GetComponent<Enemy>().ID = SpawnStack;
+
+                KeyValuePair<int, GameObject> newEnemy = new KeyValuePair<int, GameObject>(SpawnStack, m_Enemies[SpawnStack]);
+
+                m_SpawnedEnemies.Add(newEnemy);
+
+                SpawnStack--;
+
+                //increment amount of enemies spawned from this spawner
+                AmountSpawned++;
+
+                //reset counter 
+                SpawnCounter = SpawnTime;
+            }
         }
         else
         {
             //count down timer
             SpawnCounter -= Time.deltaTime; 
         }
+
+        if(SpawnStack < 0)
+        {
+            SpawnStack = SpawnerCapactity - 1;
+        }
+
     }
 
     /// <summary>
@@ -94,8 +118,10 @@ public class EnemySpawner : MonoBehaviour
                 //remove that enemy from spawned
                 m_SpawnedEnemies.RemoveAt(i);
 
+
                 //decrement Amount of spawned enemies
                 AmountSpawned--;
+                break;
             }
             else
             {

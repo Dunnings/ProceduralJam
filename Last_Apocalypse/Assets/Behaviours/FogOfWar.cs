@@ -120,6 +120,11 @@ public class FogOfWar : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
+
         //get array pos from player pos
         float posX = (player.transform.position.x * 100.0f / tileWidth) + MOD;
         float posY = (player.transform.position.y * 100.0f / tileHeight) + MOD;
