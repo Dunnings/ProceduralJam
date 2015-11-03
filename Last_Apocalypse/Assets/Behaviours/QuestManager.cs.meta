@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: 18b7cb8768ef27d4195334b1bfc89b99
-timeCreated: 1446061353
-licenseType: Pro
+timeCreated: 1446565184
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - handIn: {fileID: 8300000, guid: 3950f8eca2810cf4e9f9ac67a3c529c5, type: 3}
+  - m_dayCount: {instanceID: 0}
+  - m_itemParent: {instanceID: 0}
+  - m_oxy: {instanceID: 0}
+  - m_questText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

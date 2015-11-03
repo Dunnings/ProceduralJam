@@ -7,6 +7,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public InventorySlot InventorySlot;
     public Item m_item;
+   
 
     private float timeMousePressed = 0f;
 
@@ -36,21 +37,24 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        CharMovement.Instance.isMouseOverUI = true;
         InventoryManager.Instance.OnInventoryItemPressed(this);
         timeMousePressed = Time.time;
+        
+        QuestManager.Instance.DroppedObject();
+        InventoryManager.Instance.OnInventoryItemClick(this);
+
+        //InventoryManager.Instance.OnInventoryItemClick(this);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        CharMovement.Instance.isMouseOverUI = false;
-        if (Time.time - timeMousePressed < 0.3f)
-        {
-            InventoryManager.Instance.OnInventoryItemClick(this);
-        }
-        else
-        {
-            InventoryManager.Instance.OnInventoryItemReleased(this);
-        }
+        //if (Time.time - timeMousePressed < 0.3f)
+        //{
+        //    InventoryManager.Instance.OnInventoryItemClick(this);
+        //}
+        //else
+        //{
+        //    InventoryManager.Instance.OnInventoryItemReleased(this);
+        //}
     }
 }

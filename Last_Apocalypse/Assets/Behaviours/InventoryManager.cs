@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class InventoryManager : MonoBehaviour {
 
     public static InventoryManager Instance;
-
+    
     public List<InventorySlot> m_inventorySlots = new List<InventorySlot>();
     InventoryItem heldItem;
     bool isHoldingInvItem = false;
@@ -61,6 +61,7 @@ public class InventoryManager : MonoBehaviour {
         if (QuestManager.Instance.IsThisItemRequired(iI.gameObject))
         {
             iS.Highlight();
+            QuestManager.Instance.PickedUpObject();
         }
     }
 

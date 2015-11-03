@@ -7,6 +7,7 @@ public class CharItemAcquisition : MonoBehaviour {
     public Animator m_anim;
     public KeyCode m_pickUpKey = KeyCode.Space;
     public float m_pickupDistance = 0.2f;
+    public AudioClip pickup;
 
     List<Item> m_listOfObjects = new List<Item>();
 
@@ -33,6 +34,7 @@ public class CharItemAcquisition : MonoBehaviour {
                 if (Vector3.Distance(transform.position, closestObject.transform.position) < m_pickupDistance)
                 {
                     closestObject.PickUp();
+                    AudioManager.instance.PlaySingle(pickup);
                 }
             }
         }

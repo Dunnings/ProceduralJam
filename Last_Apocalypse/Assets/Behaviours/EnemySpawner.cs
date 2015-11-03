@@ -96,8 +96,6 @@ public class EnemySpawner : MonoBehaviour
             SpawnStack = SpawnerCapactity - 1;
         }
 
-        Debug.Log(AmountSpawned);
-
     }
 
     /// <summary>

@@ -14,6 +14,11 @@ public class CharMovement : MonoBehaviour {
     public float minSpeed = 2f;
 	public bool isMouseOverUI = false, m_followMouse = false;
 
+    public AudioClip footstep1;
+    public AudioClip footstep2;
+    float repeatTime = 0.35f;
+    float timer = 0f;
+
     Collision2D col;
 
     // Use this for initialization
@@ -32,13 +37,15 @@ public class CharMovement : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && !isMouseOverUI)
         {
             m_followMouse = true;
+            
         }
         // When mouse button is held down
         if (Input.GetMouseButtonUp(0) || isMouseOverUI)
         {
             m_followMouse = false;
         }
-        if (m_followMouse) { 
+        if (m_followMouse) {
+            
             // Get mouse position on screen
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
@@ -50,6 +57,7 @@ public class CharMovement : MonoBehaviour {
                 var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 anim.SetBool("isWalking", true);
+                
             }
             else
             {
@@ -65,12 +73,20 @@ public class CharMovement : MonoBehaviour {
             }
             else
             {
+                // Calculate speed based on mouse distance from player
                 float distanceRatio = (distance - minDistance) / (maxDistance - minDistance);
                 float diffSpeed = maxSpeed - minSpeed;
                 speed = (distanceRatio * diffSpeed) + minSpeed;
+                anim.speed = (distanceRatio + diffSpeed) + minSpeed;
             }
-        
-            
+            // Play delayed footsteps
+            timer += Time.deltaTime;
+            if (timer >= repeatTime)
+            {
+                AudioManager.instance.RandomizeSfx(footstep1, footstep2);
+                timer = 0;
+            }   
+            // Move
 		gameObject.transform.position = Vector3.Lerp(gameObject.transform.position,
                                          mousePos,
                                          1 / (speed * (Vector3.Distance(gameObject.transform.position, mousePos))) * Time.deltaTime);
@@ -105,4 +121,5 @@ public class CharMovement : MonoBehaviour {
     {
         isMouseOverUI = isIt;
     }
+    
 }
