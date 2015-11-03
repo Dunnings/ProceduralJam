@@ -61,6 +61,7 @@ public class InventoryManager : MonoBehaviour {
         if (QuestManager.Instance.IsThisItemRequired(iI.gameObject))
         {
             iS.Highlight();
+            QuestManager.Instance.PickedUpObject();
         }
     }
 

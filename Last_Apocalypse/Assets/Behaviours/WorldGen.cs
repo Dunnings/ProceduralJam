@@ -140,7 +140,7 @@ public class WorldGen : MonoBehaviour {
 
 		int spawnLoc = (WorldPanelXYCount / 2) * PanelXYCount;
 
-		Player.transform.position = new Vector3 (spawnLoc, spawnLoc, 0);
+		Player.transform.position = new Vector3 (spawnLoc, spawnLoc-1, 0);
 
 
 		//place items
