@@ -102,7 +102,7 @@ public class QuestManager : MonoBehaviour {
 
 		anim_speech.SetBool ("open", true);
 		pc.gameObject.SetActive (true);
-		yield return new WaitForSeconds (1.5);
+		yield return new WaitForSeconds (1.5f);
 		for (int i = 0; i < messages.Count; i++)//For each packet of messages...
 		{
 			for (int j = 0; j < messages[i].Length; j++)//For each message...
