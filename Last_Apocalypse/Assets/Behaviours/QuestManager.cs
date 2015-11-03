@@ -31,12 +31,6 @@ public class QuestManager : MonoBehaviour {
 	}
 	
 	void Start () {
-
-		StreamReader inputFile = new StreamReader("Assets/Dialogue/test.txt");
-		while (!inputFile.EndOfStream)
-		{
-			messages.Add(inputFile.ReadLine());
-		}
 		pc.gameObject.SetActive (true);
 		anim = pc.GetComponent<Animator> ();
 		textComp = display.GetComponent<Text>();
@@ -70,7 +64,6 @@ public class QuestManager : MonoBehaviour {
 
     public void GenerateNewQuest()
     {
-		StartCoroutine (AnCouroutine());
         m_requiredItems.Clear();
         List<Item> potentialItems = new List<Item>();
         for (int i = 0; i < m_itemParent.transform.childCount; i++)
@@ -88,6 +81,7 @@ public class QuestManager : MonoBehaviour {
             m_oxy.m_oxygenPercent = 1f;
             day++;
             m_dayCount.text = "Day " + day;
+			StartCoroutine (AnCouroutine());
         }
         else
         {
@@ -98,8 +92,17 @@ public class QuestManager : MonoBehaviour {
 
 	IEnumerator AnCouroutine()
 	{
+		string filepath = "Assets/Dialogue/Day" + day + ".txt";
+		StreamReader inputFile = new StreamReader(filepath);
+		messages.Clear ();
+		while (!inputFile.EndOfStream)
+		{
+			messages.Add(inputFile.ReadLine());
+		}
+
 		anim_speech.SetBool ("open", true);
-		yield return new WaitForSeconds (2);
+		pc.gameObject.SetActive (true);
+		yield return new WaitForSeconds (1.5);
 		for (int i = 0; i < messages.Count; i++)//For each packet of messages...
 		{
 			for (int j = 0; j < messages[i].Length; j++)//For each message...
