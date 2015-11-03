@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public float speed, sightRadius;
     //reference to my spawner
     public EnemySpawner m_Spawner;
+    public AudioClip enemySound;
 
     void FixedUpdate()
     {
@@ -62,6 +63,8 @@ public class Enemy : MonoBehaviour
             m_Spawner.EnemyDestroy(ID);
 
             OxygenBar.Instance.m_oxygenPercent -= Damage;
+
+            AudioManager.instance.PlaySingle(enemySound);
 
             GameCamera.Instance.ShakeCamera();
         }
