@@ -6,6 +6,7 @@ public class Item : MonoBehaviour {
 
     public SpriteRenderer m_image;
     public InventoryItem m_invItem;
+    public AudioClip drop;
     public bool isPlaced = true;
     
     public void PickUp()
@@ -27,5 +28,7 @@ public class Item : MonoBehaviour {
         transform.position = pos;
         isPlaced = true;
         CharMovement.Instance.anim.Play("player_poke");
+        AudioManager.instance.PlaySingle(drop);
+        Debug.Log("drop");
     }
 }

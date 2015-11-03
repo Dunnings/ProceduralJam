@@ -7,6 +7,7 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public InventorySlot InventorySlot;
     public Item m_item;
+   
 
     private float timeMousePressed = 0f;
 

@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: fed40b3a74e66b0409abb83d91ea672b
-timeCreated: 1446060735
-licenseType: Pro
+timeCreated: 1446565919
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - InventorySlot: {instanceID: 0}
+  - m_item: {instanceID: 0}
+  - drop: {fileID: 8300000, guid: 3950f8eca2810cf4e9f9ac67a3c529c5, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

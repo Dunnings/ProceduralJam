@@ -7,6 +7,8 @@ public class QuestManager : MonoBehaviour {
 
     int day = 0;
 
+    public AudioClip handIn;
+
     public Text m_dayCount;
 
     public static QuestManager Instance;
@@ -57,6 +59,8 @@ public class QuestManager : MonoBehaviour {
             m_oxy.m_oxygenPercent = 1f;
             day++;
             m_dayCount.text = "Day " + day;
+            AudioManager.instance.PlaySingle(handIn);
+            Debug.Log("handin");
         }
         else
         {

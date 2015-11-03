@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class InventoryManager : MonoBehaviour {
 
     public static InventoryManager Instance;
-
+    
     public List<InventorySlot> m_inventorySlots = new List<InventorySlot>();
     InventoryItem heldItem;
     bool isHoldingInvItem = false;
