@@ -9,6 +9,19 @@ public class Item : MonoBehaviour {
     public AudioClip drop;
     public bool isPlaced = true;
     
+    void Start()
+    {
+
+        //m_invItem = GameObject.Find(gameObject.name).GetComponent<InventoryItem>();
+        //for (int i = 0; i < allinvItems.Length; i++)
+        //{
+        //    if(allinvItems[i].gameObject.name == gameObject.name) {
+        //        m_invItem = allinvItems[i];
+        //        return;
+        //    }
+        //}
+    }
+
     public void PickUp()
     {
         if (isPlaced)

@@ -33,10 +33,6 @@ public class QuestGiver : MonoBehaviour
 		if (Input.GetMouseButtonDown (1)) {
 			spacebar = true;
 		}
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            Application.LoadLevel("_David");
-        }
     }
 
 	IEnumerator AnCouroutine()
@@ -66,6 +62,8 @@ public class QuestGiver : MonoBehaviour
 		anim_speech.SetBool ("open", false);
 		yield return new WaitForSeconds (2);
 		pc.gameObject.SetActive (false);
+        QuestManager.Instance.GenerateNewQuest();
+        OxygenBar.Instance.enabled = true;
         //Application.LoadLevel("_David");
 	}
 

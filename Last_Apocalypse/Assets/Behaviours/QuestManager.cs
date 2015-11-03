@@ -95,7 +95,9 @@ public class QuestManager : MonoBehaviour {
     }
 
 	IEnumerator AnCouroutine()
-	{
+    {
+        TimeManager.Instance.enabled = false;
+        OxygenBar.Instance.enabled = false;
 		string filepath = "Assets/Dialogue/Day" + day + ".txt";
 		StreamReader inputFile = new StreamReader(filepath);
 		messages.Clear ();
@@ -132,8 +134,9 @@ public class QuestManager : MonoBehaviour {
 		movementScript.maxSpeed = 0.3f;
 		yield return new WaitForSeconds (2);
 		pc.gameObject.SetActive (false);
-		//Application.LoadLevel("_David");
-	}
+        OxygenBar.Instance.enabled = true;
+        TimeManager.Instance.enabled = true;
+    }
 
     public void FailedQuest()
     {

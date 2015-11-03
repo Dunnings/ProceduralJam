@@ -37,7 +37,6 @@ public class CharMovement : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && !isMouseOverUI)
         {
             m_followMouse = true;
-            
         }
         // When mouse button is held down
         if (Input.GetMouseButtonUp(0) || isMouseOverUI)
