@@ -20,9 +20,10 @@ public class QuestManager : MonoBehaviour {
     public List<string> m_requiredItems = new List<string>();
     
 	//Ai stuffs
-	public GameObject display, pc, speech;
+	public GameObject display, pc, speech, CharMover;
 	Text textComp;
 	Animator anim, anim_speech;
+	CharMovement movementScript;
 	List<string> messages = new List<string>();
 	bool spacebar;
 
@@ -31,7 +32,7 @@ public class QuestManager : MonoBehaviour {
 	}
 	
 	void Start () {
-		pc.gameObject.SetActive (true);
+		movementScript = CharMover.GetComponent<CharMovement>();
 		anim = pc.GetComponent<Animator> ();
 		textComp = display.GetComponent<Text>();
 		textComp.text = "";
@@ -99,10 +100,11 @@ public class QuestManager : MonoBehaviour {
 		{
 			messages.Add(inputFile.ReadLine());
 		}
-
+		
+		movementScript.maxSpeed = 100.0f;
 		anim_speech.SetBool ("open", true);
 		pc.gameObject.SetActive (true);
-		yield return new WaitForSeconds (1.5);
+		yield return new WaitForSeconds (1.5f);
 		for (int i = 0; i < messages.Count; i++)//For each packet of messages...
 		{
 			for (int j = 0; j < messages[i].Length; j++)//For each message...
@@ -124,6 +126,7 @@ public class QuestManager : MonoBehaviour {
 		}
 		anim.SetBool("talking", false);
 		anim_speech.SetBool ("open", false);
+		movementScript.maxSpeed = 0.3f;
 		yield return new WaitForSeconds (2);
 		pc.gameObject.SetActive (false);
 		//Application.LoadLevel("_David");
