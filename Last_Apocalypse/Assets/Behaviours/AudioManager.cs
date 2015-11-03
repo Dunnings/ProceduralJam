@@ -5,17 +5,27 @@ public class AudioManager : MonoBehaviour {
 
     public AudioSource efxSource;
     public AudioSource musicSource;
-    public static AudioManager instance = null;
+    private static AudioManager instance;
+    public static AudioManager GetInstance()
+    {
+        if(instance == null)
+        {
+            instance = new AudioManager();
+        }
+        return instance;
+    }
 
     public float lowPitchRange = .95f;
     public float highPitchRange = 1.05f;
     // Use this for initialization
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
+        //if (instance == null)
+        //    instance = this;
+        //else if (instance != this)
+        //    Destroy(gameObject);
+
+        instance = this;
 
         DontDestroyOnLoad(gameObject);
 

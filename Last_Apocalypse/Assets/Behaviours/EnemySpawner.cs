@@ -30,6 +30,7 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        Player = GameObject.FindGameObjectWithTag("Player");
         SpawnStack = SpawnerCapactity - 1;
         //set up SpawnnCounter 
         SpawnCounter = SpawnTime;

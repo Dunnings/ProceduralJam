@@ -34,7 +34,7 @@ public class CharItemAcquisition : MonoBehaviour {
                 if (Vector3.Distance(transform.position, closestObject.transform.position) < m_pickupDistance)
                 {
                     closestObject.PickUp();
-                    AudioManager.instance.PlaySingle(pickup);
+                    AudioManager.GetInstance().PlaySingle(pickup);
                 }
             }
         }

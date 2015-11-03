@@ -17,29 +17,27 @@ public class HeatIndicator : MonoBehaviour {
 
     float lastFlashTime = 0f;
     
-	void Awake(){
-		
-	}
-
-	void Start () {
-		
-	}
 
     void Update() {
-        if (!QuestManager.Instance.m_requiredItems[0].GetComponent<Item>().isPlaced)
+        if (QuestManager.Instance.m_requiredItems.Count > 0)
         {
-            m_Image.color = new Color(0f, 0f, 0f, 0f);
-        }
-        else { 
-            m_normalizedDistance = Vector3.Distance(QuestManager.Instance.m_requiredItems[0].transform.position, CharMovement.Instance.transform.position) / m_maxDistance;
-            m_Image.color = Color.Lerp(m_hot, m_cold, m_normalizedDistance);
-
-            if (Time.time - lastFlashTime > m_normalizedDistance * 2f)
+            if (!QuestManager.Instance.m_requiredItems[0].GetComponent<Item>().isPlaced)
             {
                 m_Image.color = new Color(0f, 0f, 0f, 0f);
-                if (Time.time - lastFlashTime > (m_normalizedDistance * 2f) + 0.1f)
+            }
+            else
+            {
+
+                m_normalizedDistance = Vector3.Distance(QuestManager.Instance.m_requiredItems[0].transform.position, CharMovement.Instance.transform.position) / m_maxDistance;
+                m_Image.color = Color.Lerp(m_hot, m_cold, m_normalizedDistance);
+
+                if (Time.time - lastFlashTime > m_normalizedDistance * 2f)
                 {
-                    lastFlashTime = Time.time;
+                    m_Image.color = new Color(0f, 0f, 0f, 0f);
+                    if (Time.time - lastFlashTime > (m_normalizedDistance * 2f) + 0.1f)
+                    {
+                        lastFlashTime = Time.time;
+                    }
                 }
             }
         }

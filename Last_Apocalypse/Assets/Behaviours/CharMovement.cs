@@ -82,7 +82,7 @@ public class CharMovement : MonoBehaviour {
             timer += Time.deltaTime;
             if (timer >= repeatTime)
             {
-                AudioManager.instance.RandomizeSfx(footstep1, footstep2);
+                AudioManager.GetInstance().RandomizeSfx(footstep1, footstep2);
                 timer = 0;
             }   
             // Move
