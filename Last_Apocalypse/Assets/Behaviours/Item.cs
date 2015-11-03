@@ -7,17 +7,7 @@ public class Item : MonoBehaviour {
     public SpriteRenderer m_image;
     public InventoryItem m_invItem;
     public bool isPlaced = true;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
+    
     public void PickUp()
     {
         if (isPlaced)

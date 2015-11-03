@@ -105,10 +105,13 @@ public class FogOfWar : MonoBehaviour
             }
         }
 
-        //take player pos and clear fog
-        float posX = player.transform.position.x * 100.0f / tileWidth;
-        float posY = player.transform.position.y * 100.0f / tileHeight;
-        ClearFog((int)posX, (int)posY, fogTiles, false);
+        if (player != null)
+        {
+            //take player pos and clear fog
+            float posX = player.transform.position.x * 100.0f / tileWidth;
+            float posY = player.transform.position.y * 100.0f / tileHeight;
+            ClearFog((int)posX, (int)posY, fogTiles, false);
+        }
     }
     
     /// <summary>
@@ -116,23 +119,26 @@ public class FogOfWar : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        //get array pos from player pos
-        float posX = (player.transform.position.x * 100.0f / tileWidth) + 7;
-        float posY = (player.transform.position.y * 100.0f / tileHeight) + 7;
-
-        //if the player has moved into the sight buffer update FoW
-        if (posX >= pastPosX + sightBuffer || posX <= pastPosX - sightBuffer ||
-            posY >= pastPosY + sightBuffer || posY <= pastPosY - sightBuffer)
+        if (player != null)
         {
-            
-            ClearFog((int)posX, (int)posY, blackFog, false);
-            ClearFog((int)pastPosX, (int)pastPosY, alphaFog, true);
-            ClearFog((int)posX, (int)posY, alphaFog, false);            
+            //get array pos from player pos
+            float posX = (player.transform.position.x * 100.0f / tileWidth) + 7;
+            float posY = (player.transform.position.y * 100.0f / tileHeight) + 7;
 
-            //reset pastPosition
-            pastPosX = posX;
-            pastPosY = posY;
-        }        
+            //if the player has moved into the sight buffer update FoW
+            if (posX >= pastPosX + sightBuffer || posX <= pastPosX - sightBuffer ||
+                posY >= pastPosY + sightBuffer || posY <= pastPosY - sightBuffer)
+            {
+
+                ClearFog((int)posX, (int)posY, blackFog, false);
+                ClearFog((int)pastPosX, (int)pastPosY, alphaFog, true);
+                ClearFog((int)posX, (int)posY, alphaFog, false);
+
+                //reset pastPosition
+                pastPosX = posX;
+                pastPosY = posY;
+            }
+        }
     }
 
     /// <summary>
