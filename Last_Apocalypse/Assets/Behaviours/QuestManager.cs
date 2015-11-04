@@ -84,7 +84,7 @@ public class QuestManager : MonoBehaviour {
             m_oxy.m_oxygenPercent = 1f;
             day++;
             m_dayCount.text = "Day " + day;
-            AudioManager.instance.PlaySingle(handIn);
+            AudioManager.GetInstance().PlaySingle(handIn);
 			StartCoroutine (AnCouroutine());
         }
         else

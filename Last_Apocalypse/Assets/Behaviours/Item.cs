@@ -41,7 +41,7 @@ public class Item : MonoBehaviour {
         transform.position = pos;
         isPlaced = true;
         CharMovement.Instance.anim.Play("player_poke");
-        AudioManager.instance.PlaySingle(drop);
+        AudioManager.GetInstance().PlaySingle(drop);
         Debug.Log("drop");
     }
 }

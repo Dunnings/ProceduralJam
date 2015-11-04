@@ -5,22 +5,48 @@ using System.Collections;
 [RequireComponent (typeof(BoxCollider))]
 public class Enemy : MonoBehaviour 
 {
-    public int health, ID;
+    public int ID;
     public float Damage;
     public float speed, sightRadius;
     //reference to my spawner
     public EnemySpawner m_Spawner;
     public AudioClip enemySound;
 
+    private float health = 5.0f;
+    private bool chase = false;
+
     void FixedUpdate()
     {
         if(Vector3.Distance(m_Spawner.Player.transform.position, this.transform.position) <= 5.0f)
         {        
             MoveEnemy();
+
+            //set chase to true
+            chase = true;
         }
         else
         {
             this.GetComponent<Rigidbody>().velocity = new Vector3(0.0f,0.0f,0.0f);
+        }
+
+        //if I am chasing start decreasing my life
+        if(chase)
+        {
+            //once health has gone
+            if(health <= 0.0f)
+            {
+                //destroy enemy
+                m_Spawner.EnemyDestroy(ID);
+
+                //reset vars for next timed spawned
+                health = 10.0f;
+                chase = false;
+            }
+            else
+            {
+                //decrement health
+                health -= Time.deltaTime;
+            }
         }
 
 
@@ -64,21 +90,10 @@ public class Enemy : MonoBehaviour
 
             OxygenBar.Instance.m_oxygenPercent -= Damage;
 
-            AudioManager.instance.PlaySingle(enemySound);
+            AudioManager.GetInstance().PlaySingle(enemySound);
 
             GameCamera.Instance.ShakeCamera();
         }
     }
 
-    ///// <summary>
-    ///// Called when collision occurs 
-    ///// </summary>
-    ///// <param name="col"></param>
-    //void OnCollisionEnter(Collision2D col)
-    //{
-    //    if(col.gameObject.tag == "Player")
-    //    {
-    //        m_Spawner.EnemyDestroy(ID);
-    //    }
-    //}
 }
