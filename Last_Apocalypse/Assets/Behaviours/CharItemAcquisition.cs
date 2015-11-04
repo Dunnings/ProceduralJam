@@ -30,7 +30,6 @@ public class CharItemAcquisition : MonoBehaviour {
 			Item closestObject = GetClosestItem();
             if(closestObject != null)
             {
-                Debug.Log(Vector3.Distance(transform.position, closestObject.transform.position) < m_pickupDistance);
                 if (Vector3.Distance(transform.position, closestObject.transform.position) < m_pickupDistance)
                 {
                     closestObject.PickUp();

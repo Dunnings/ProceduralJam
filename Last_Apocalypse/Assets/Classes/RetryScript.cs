@@ -9,7 +9,7 @@ public class RetryScript : MonoBehaviour
     /// </summary>
     public void LoadLevel()
     {
-        Application.LoadLevel("_David");
+        Application.LoadLevel("_Main");
     }
 
     /// <summary>
