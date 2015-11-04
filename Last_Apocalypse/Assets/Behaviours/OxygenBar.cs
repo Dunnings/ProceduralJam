@@ -58,7 +58,7 @@ public class OxygenBar : MonoBehaviour
         if(m_oxygenPercent <= 0f)
         {
             Application.LoadLevel("_GameOver");
-            //AudioManager.GetInstance().musicSource.Stop();
+            AudioManager.GetInstance().musicSource.Stop();
         }
     }
 }
