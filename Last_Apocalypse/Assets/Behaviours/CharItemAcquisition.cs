@@ -29,7 +29,7 @@ public class CharItemAcquisition : MonoBehaviour {
 			m_anim.Play("player_poke");
 			Item closestObject = GetClosestItem();
             if(closestObject != null)
-            {
+            {   
                 if (Vector3.Distance(transform.position, closestObject.transform.position) < m_pickupDistance)
                 {
                     closestObject.PickUp();
